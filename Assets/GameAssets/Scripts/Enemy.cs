@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    [SerializeField]
+    private float stopTime = 1.0f;
 
     public GameObject target;
     Rigidbody rigidBody;
@@ -31,12 +33,6 @@ public class Enemy : MonoBehaviour
         SetColor(normalColor);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     // fixed update
     private void FixedUpdate()
     {
@@ -54,6 +50,15 @@ public class Enemy : MonoBehaviour
         // Targetとそれ以外でColorを変える
         SetColor(collision.gameObject.name == target.name ? catchColor : touchColor);
         Invoke("Reset", 1);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Bullet")
+        {
+            // ヒットストップ処理挿入
+            HitStopManager.instance.StartHitStop(stopTime);
+        }
     }
 
     private void Reset()
@@ -82,5 +87,4 @@ public class Enemy : MonoBehaviour
             disableAction(this.gameObject);
         }
     }
-
 }
