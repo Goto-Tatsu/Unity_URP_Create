@@ -11,7 +11,7 @@ public class EnemyCreater : MonoBehaviour
     void Start()
     {
         // ユニティチャンをtargetする
-        target = GameObject.Find("SD_unitychan_humanoid 1");
+        target = GameObject.FindGameObjectWithTag("Player");
         AddEnemy();
     }
 
